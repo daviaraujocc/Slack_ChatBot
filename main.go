@@ -1,30 +1,50 @@
 package main
 
 import (
+	"fmt"
 	"log"
+	"net/http"
 	"os"
 	"time"
 
-	tb "gopkg.in/tucnak/telebot.v2"
+	"github.com/gorilla/mux"
+	"github.com/slack-go/slack"
 )
 
+var BOT_TOKEN_API = os.Getenv("BOT_TOKEN_API")
+
 func main() {
-	b, err := tb.NewBot(tb.Settings{
-		// You can also set custom API URL.
-		// If field is empty it equals to "https://api.telegram.org".
-		URL:    "",
-		Token:  os.Getenv("TOKEN_API"),
-		Poller: &tb.LongPoller{Timeout: 10 * time.Second},
-	})
 
-	if err != nil {
-		log.Fatal(err)
-		return
+	addrPort := os.Getenv("PORT")
+	addr := os.Getenv("HOST")
+
+	r := mux.NewRouter()
+	//r.HandleFunc("/commands", CommandsHandler)
+	r.HandleFunc("/hello-world", HelloWorldHandler)
+
+	srv := &http.Server{
+		Addr:         addr + ":" + addrPort,
+		Handler:      r,
+		IdleTimeout:  time.Minute,
+		WriteTimeout: 15 * time.Second,
+		ReadTimeout:  15 * time.Second,
 	}
+	err := srv.ListenAndServe()
+	log.Fatal(err)
 
-	b.Handle("/hello", func(m *tb.Message) {
-		b.Send(m.Sender, "Hello World!")
-	})
+}
 
-	b.Start()
+func HelloWorldHandler(w http.ResponseWriter, r *http.Request) {
+	api := slack.New(BOT_TOKEN_API, slack.OptionDebug(true))
+
+	channelId, timestamp, err := api.PostMessage(
+		"C02G50Y5A95", //monitor
+		slack.MsgOptionText("hello world", false),
+	)
+	if err != nil {
+		fmt.Printf("%s\n", err)
+		return
+	} else {
+		fmt.Printf("A mensagem foi enviada com sucesso %v %v", channelId, timestamp)
+	}
 }
