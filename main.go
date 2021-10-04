@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"log"
+	"net"
 	"net/http"
 	"os"
 	"time"
@@ -12,6 +13,7 @@ import (
 )
 
 var BOT_TOKEN_API = os.Getenv("BOT_TOKEN_API")
+var log_enable = false
 
 func main() {
 
@@ -21,6 +23,7 @@ func main() {
 	r := mux.NewRouter()
 	//r.HandleFunc("/commands", CommandsHandler)
 	r.HandleFunc("/hello-world", HelloWorldHandler)
+	r.HandleFunc("/ping", PingHandler)
 
 	srv := &http.Server{
 		Addr:         addr + ":" + addrPort,
@@ -35,16 +38,38 @@ func main() {
 }
 
 func HelloWorldHandler(w http.ResponseWriter, r *http.Request) {
-	api := slack.New(BOT_TOKEN_API, slack.OptionDebug(true))
+	api := slack.New(BOT_TOKEN_API, slack.OptionDebug(log_enable))
 
-	channelId, timestamp, err := api.PostMessage(
+	_, _, err := api.PostMessage(
 		"C02G50Y5A95", //monitor
 		slack.MsgOptionText("hello world", false),
 	)
 	if err != nil {
 		fmt.Printf("%s\n", err)
 		return
+	}
+}
+
+func PingHandler(w http.ResponseWriter, r *http.Request) {
+	timeout := 1 * time.Second
+	_, err := net.DialTimeout("tcp", "www.google.com.br:443", timeout)
+	if err != nil {
+		MessageSender(w, r, "O host está UP!")
 	} else {
-		fmt.Printf("A mensagem foi enviada com sucesso %v %v", channelId, timestamp)
+		MessageSender(w, r, fmt.Sprintf("O host está down %v", err))
+	}
+
+}
+
+func MessageSender(w http.ResponseWriter, r *http.Request, message string) {
+	api := slack.New(BOT_TOKEN_API, slack.OptionDebug(log_enable))
+
+	_, _, err := api.PostMessage(
+		"C02G50Y5A95", //monitor
+		slack.MsgOptionText(message, false),
+	)
+	if err != nil {
+		fmt.Printf("%s\n", err)
+		return
 	}
 }
