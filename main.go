@@ -54,9 +54,9 @@ func PingHandler(w http.ResponseWriter, r *http.Request) {
 	timeout := 1 * time.Second
 	_, err := net.DialTimeout("tcp", "www.google.com.br:443", timeout)
 	if err != nil {
-		MessageSender(w, r, "O host está UP!")
-	} else {
 		MessageSender(w, r, fmt.Sprintf("O host está down %v", err))
+	} else {
+		MessageSender(w, r, "O host está UP!")
 	}
 
 }
