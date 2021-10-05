@@ -13,6 +13,7 @@ func ConnectDB() *sql.DB {
 	if err != nil {
 		log.Fatal(err)
 	}
+	log.Println("Database connected")
 	return db
 }
 

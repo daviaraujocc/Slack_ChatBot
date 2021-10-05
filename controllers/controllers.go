@@ -38,7 +38,7 @@ func InsertHandler(w http.ResponseWriter, r *http.Request) {
 
 	t := r.FormValue("text")
 
-	if r.Method == "POST" && match(t, "add host") {
+	if r.Method == "POST" && match(`add host.*`, t) {
 	} else {
 		log.Fatal("Invalid route.")
 	}
