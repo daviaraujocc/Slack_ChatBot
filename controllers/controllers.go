@@ -2,9 +2,11 @@ package controllers
 
 import (
 	"fmt"
+	"log"
 	"net"
 	"net/http"
 	"os"
+	"regexp"
 	"time"
 
 	"slack-bot/db"
@@ -29,9 +31,17 @@ func HelloWorldHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func InsertHandler(w http.ResponseWriter, r *http.Request) {
+	r.ParseForm()
 
 	db := db.ConnectDB()
 	defer db.Close()
+
+	t := r.FormValue("text")
+
+	if r.Method == "POST" && match(t, "add host") {
+	} else {
+		log.Fatal("Invalid route.")
+	}
 
 }
 
@@ -57,4 +67,9 @@ func MessageSender(message string) {
 		fmt.Printf("%s\n", err)
 		return
 	}
+}
+
+func match(pattern string, value string) bool {
+	result, _ := regexp.MatchString(pattern, value)
+	return result
 }

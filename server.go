@@ -27,8 +27,8 @@ func main() {
 
 	r.HandleFunc("/api/v1/hello-world", controllers.HelloWorldHandler)
 	r.HandleFunc("/api/v1/ping", controllers.PingHandler)
-	r.HandleFunc("/api/v1/monitor", controllers.PingHandler)
-	r.HandleFunc("/api/v1/hosts", controllers.PingHandler)
+	r.HandleFunc("/api/v1/monitor", controllers.InsertHandler)
+	//r.HandleFunc("/api/v1/hosts", controllers.HostsHandler)
 
 	srv := &http.Server{
 		Addr:         ":" + addrPort,
