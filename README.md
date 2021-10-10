@@ -1,4 +1,4 @@
-# ARIA-ChatBot
+# Slack_ChatBot
 Chatbot (slack) for endpoints
 
 
