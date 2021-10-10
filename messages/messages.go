@@ -41,13 +41,17 @@ func ShowAllHostsMessage(hosts []models.Host) {
 	bodyText.WriteString("*Lista de hosts cadastrados:*")
 	bodyText.WriteString("\n")
 
-	for _, host := range hosts {
+	for i, host := range hosts {
 		if host.Status == "DOWN" {
 			status = ":x:"
 		} else {
 			status = ":white_check_mark:"
 		}
-		bodyText.WriteString(fmt.Sprintf("Host: %v, Porta: %v, Status: %v \n", host.Host_name, host.Port, status))
+		//bodyText.WriteString(fmt.Sprintf("Host: %v, Porta: %v, Status: %v \n", host.Host_name, host.Port, status))
+		bodyText.WriteString(fmt.Sprintf("ID: %v \n", i) +
+			fmt.Sprintf("Host: %v \n", host.Host_name) +
+			fmt.Sprintf("Porta: %v \n", host.Port) +
+			fmt.Sprintf("Status: %v \n\n", status))
 
 	}
 	log.Println(bodyText.String())
