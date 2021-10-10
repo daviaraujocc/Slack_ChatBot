@@ -48,7 +48,7 @@ func ShowAllHostsMessage(hosts []models.Host) {
 			status = ":white_check_mark:"
 		}
 		//bodyText.WriteString(fmt.Sprintf("Host: %v, Porta: %v, Status: %v \n", host.Host_name, host.Port, status))
-		bodyText.WriteString(fmt.Sprintf("ID: %v \n", i) +
+		bodyText.WriteString(fmt.Sprintf("ID: %v \n", i+1) +
 			fmt.Sprintf("Host: %v \n", host.Host_name) +
 			fmt.Sprintf("Porta: %v \n", host.Port) +
 			fmt.Sprintf("Status: %v \n\n", status))
