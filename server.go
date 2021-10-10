@@ -24,7 +24,7 @@ func main() {
 	r := mux.NewRouter()
 
 	r.HandleFunc("/api/v1/ping", controllers.PingHandler)
-	r.HandleFunc("/api/v1/monitor", controllers.MonitorHandler).Methods("POST")
+	r.HandleFunc("/api/v1/monitor", controllers.MonitorHandler)
 	r.HandleFunc("/api/v1/hosts", controllers.HostsHandler)
 	r.HandleFunc("/api/v1/reset", controllers.ResetHandler)
 	r.HandleFunc("/api/v1/help", controllers.HelpHandler)
