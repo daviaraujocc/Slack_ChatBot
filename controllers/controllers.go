@@ -26,7 +26,7 @@ func MonitorHandler(w http.ResponseWriter, r *http.Request) {
 	tFormat := strings.Split(t, " ")
 
 	if len(tFormat) <= 2 {
-		log.Println("Sem informações")
+		messages.MessageSender("monitor", ":information_source: [MONITOR] Não identifiquei o que você digitou. Consule /help caso tenha alguma dúvida.")
 	} else {
 		switch {
 		case match(`add host.*`, t) && len(tFormat) == 4:
@@ -52,7 +52,7 @@ func MonitorHandler(w http.ResponseWriter, r *http.Request) {
 			}
 		default:
 			log.Println("Invalid Route")
-			messages.MessageSender("monitor", ":information_source: [MONITOR] Não identifiquei o que você quer fazer.")
+			messages.MessageSender("monitor", ":information_source: [MONITOR] Por gentileza, informe todos os parâmetros. Consule /help caso tenha alguma dúvida.")
 		}
 	}
 
