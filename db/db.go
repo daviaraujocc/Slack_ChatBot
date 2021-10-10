@@ -17,7 +17,6 @@ func ConnectDB() *sql.DB {
 }
 
 func CreateDB() {
-	os.Remove("./database.db")
 
 	log.Println("Creating database.db...")
 
