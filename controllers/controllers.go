@@ -94,7 +94,7 @@ func HelpHandler(w http.ResponseWriter, r *http.Request) {
 		"`/ping` - Realiza ping para o host e porta retornando o status da conexão, exemplo: `/ping contoso.com.br 443` \n\n" +
 		"`/monitor` - Usado para adicionar/remover hosts e endpoints do monitoramento. Parâmetros: \n\n" +
 		"   * add host {host} {porta} - Adiciona o host no monitoramento, exemplo: `/monitor add host contoso.com.br 443` \n\n" +
-		"   * remove {host} {host} - Remove o host do monitoramento, exemplo: `/monitor remove host contoso.com.br` \n\n" +
+		"   * remove host {host} - Remove o host do monitoramento, exemplo: `/monitor remove host contoso.com.br` \n\n" +
 		"`/hosts` - Mostra todos os hosts cadastrados no monitoramento. \n\n" +
 		"`/help` - Exibe esta mensagem. \n\n" +
 		"`/status` - Exibe status do bot."
