@@ -30,7 +30,7 @@ func main() {
 	r.HandleFunc("/api/v1/help", controllers.HelpHandler)
 
 	if len(addrPort) == 0 {
-		addrPort = "30000"
+		addrPort = "3000"
 	}
 
 	srv := &http.Server{

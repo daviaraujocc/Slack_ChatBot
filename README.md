@@ -35,13 +35,13 @@ When the application starts, it will create a file based on SQLite named "databa
 
 ## Endpoints:
 
-| Endpoint | Description | 
-| --- | --- | 
-| /api/v1/monitor | Add/Remove endpoints to be monitored | 
-| /api/v1/hosts | Return all hosts registered in DB | 
-| /api/v1/ping | Ping to target and port informed | 
-| /api/v1/help | Show help message | 
-| /api/v1/reset | Reset all entries in DB |
+| Endpoint | Description | Usage |
+| --- | --- | --- |
+| /api/v1/monitor | Add/Remove endpoints to be monitored | /monitor add host {host} {port} - to add new entrie. |
+| /api/v1/hosts | Return all hosts registered in DB |  |
+| /api/v1/ping | Ping to target and port informed |  |
+| /api/v1/help | Show help message |  |
+| /api/v1/reset | Reset all entries in DB | |
 
 
 
