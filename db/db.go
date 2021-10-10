@@ -29,3 +29,22 @@ func CreateDB() {
 	file.Close()
 	log.Println("database.db created")
 }
+
+func CreateTableHosts() {
+	db := ConnectDB()
+	defer db.Close()
+	createHostTableSQL := `CREATE TABLE Host (
+		"id" integer NOT NULL PRIMARY KEY AUTOINCREMENT,		
+		"host_name" TEXT,
+		"port" TEXT,
+		"status" TEXT	
+	  );`
+
+	log.Println("Create database table...")
+	stm, err := db.Prepare(createHostTableSQL)
+	if err != nil {
+		log.Fatal(err.Error())
+	}
+	stm.Exec()
+	log.Println("database table created")
+}

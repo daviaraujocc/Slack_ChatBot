@@ -6,7 +6,7 @@ import (
 	"os"
 	"slack-bot/controllers"
 	"slack-bot/db"
-	"slack-bot/models"
+	"slack-bot/services"
 	"time"
 
 	"github.com/gorilla/mux"
@@ -14,9 +14,7 @@ import (
 
 func init() {
 	db.CreateDB()
-	db := db.ConnectDB()
-	models.CreateTableHosts(db)
-	defer db.Close()
+	db.CreateTableHosts()
 }
 
 func main() {
@@ -25,10 +23,15 @@ func main() {
 
 	r := mux.NewRouter()
 
-	r.HandleFunc("/api/v1/hello-world", controllers.HelloWorldHandler)
 	r.HandleFunc("/api/v1/ping", controllers.PingHandler)
-	r.HandleFunc("/api/v1/monitor", controllers.PingHandler)
-	r.HandleFunc("/api/v1/hosts", controllers.PingHandler)
+	r.HandleFunc("/api/v1/monitor", controllers.MonitorHandler)
+	r.HandleFunc("/api/v1/hosts", controllers.HostsHandler)
+	r.HandleFunc("/api/v1/reset", controllers.ResetHandler)
+	r.HandleFunc("/api/v1/help", controllers.HelpHandler)
+
+	if len(addrPort) == 0 {
+		addrPort = "30000"
+	}
 
 	srv := &http.Server{
 		Addr:         ":" + addrPort,
@@ -37,6 +40,11 @@ func main() {
 		WriteTimeout: 15 * time.Second,
 		ReadTimeout:  15 * time.Second,
 	}
+
+	//Daemons
+	go services.CheckHosts()
+
 	err := srv.ListenAndServe()
 	log.Fatal(err)
+
 }

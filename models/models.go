@@ -1,46 +1,86 @@
 package models
 
 import (
-	"database/sql"
 	"log"
 	"slack-bot/db"
 )
 
 type Host struct {
-	Id   int
-	Host string
-	Port string
+	Id        int
+	Host_name string
+	Port      string
+	Status    string
 }
 
-func CreateTableHosts(db *sql.DB) {
-	createHostTableSQL := `CREATE TABLE Host (
-		"id" integer NOT NULL PRIMARY KEY AUTOINCREMENT,		
-		"host" TEXT,
-		"port" TEXT		
-	  );`
+func InsertHost(host, port string) bool {
+	db := db.ConnectDB()
+	defer db.Close()
+	h := findHost(host)
+	if (Host{}) != h {
+		return false
+	} else {
 
-	log.Println("Create database table...")
-	stm, err := db.Prepare(createHostTableSQL)
-	if err != nil {
-		log.Fatal(err.Error())
+		insertHostSQL := `INSERT INTO Host(host_name, port, status) VALUES (?, ?, ?)`
+		stm, err := db.Prepare(insertHostSQL)
+		if err != nil {
+			log.Println("Erro ao executar statement")
+			return false
+		}
+
+		_, err = stm.Exec(host, port, "UP")
+		if err != nil {
+			log.Println("Erro ao executar statement")
+			return false
+		}
+
 	}
-	stm.Exec()
-	log.Println("database table created")
+	return true
 }
 
-func InsertHost(db *sql.DB, host, port string) {
-	log.Println("Inserting host record")
-	insertHostSQL := `INSERT INTO Host(host, port) VALUES (?, ?)`
-	stm, err := db.Prepare(insertHostSQL)
+func DeleteHost(host string) bool {
+	db := db.ConnectDB()
+	defer db.Close()
+	deleteHostSQL := `DELETE FROM Host WHERE host_name=?`
+	stm, err := db.Prepare(deleteHostSQL)
 
 	if err != nil {
-		log.Fatalln(err.Error())
+		log.Println("Erro ao executar statement")
+		return false
 	}
 
-	_, err = stm.Exec(host, port)
+	_, err = stm.Exec(host)
 	if err != nil {
-		log.Fatalln(err.Error())
+		log.Println("Erro ao executar statement")
+		return false
 	}
+	return true
+}
+
+func ResetAllHosts() bool {
+	db := db.ConnectDB()
+	defer db.Close()
+	resetHostSQL := `DELETE FROM Host`
+	stm, err := db.Prepare(resetHostSQL)
+	if err != nil {
+		log.Println("Erro ao executar statement")
+		return false
+	}
+
+	_, err = stm.Exec()
+	if err != nil {
+		log.Println("Erro ao executar statement")
+		return false
+	}
+	return true
+}
+
+func EditStatus(status, host string) {
+	db := db.ConnectDB()
+	defer db.Close()
+	editStatusHostSQL := `UPDATE Host SET status=? WHERE host_name=?`
+	stm, _ := db.Prepare(editStatusHostSQL)
+
+	_, _ = stm.Exec(status, host)
 }
 
 func FindAllHosts() []Host {
@@ -55,11 +95,19 @@ func FindAllHosts() []Host {
 
 	for selectAllHosts.Next() {
 		h := Host{}
-		err = selectAllHosts.Scan(&h.Id, &h.Host, &h.Port)
+		err = selectAllHosts.Scan(&h.Id, &h.Host_name, &h.Port, &h.Status)
 		if err != nil {
 			panic(err.Error())
 		}
 		hosts = append(hosts, h)
 	}
 	return hosts
+}
+
+func findHost(host_name string) Host {
+	db := db.ConnectDB()
+	defer db.Close()
+	var h Host
+	db.QueryRow("SELECT * FROM Host WHERE host_name=?", host_name).Scan(&h.Id, &h.Host_name, &h.Port, &h.Status)
+	return h
 }
