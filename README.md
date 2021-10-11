@@ -19,9 +19,13 @@ When the application starts, it will create a file based on SQLite named "databa
 
 ## Building the app:
 
-1. Be sure to have `gcc` installed on your O.S because it needs CGO since sqlite driver demands it.
-2. Run the command: `CGO_ENABLED=1 go build -o slackgo-api` to build the API.
+1. Be sure to have `gcc` installed on your O.S because it needs `CGO` since sqlite driver demands it.
+2. Run the command: `go build -o slackgo-api` to build the API.
 3. Execute and test your bot.
+   
+##### Or you can use docker:
+   `docker build -t your-user/your-app-name .`
+   `docker run -t your-user/your-app-name -p 3000:3000(default)`
 
 ## Variables:
 
@@ -37,11 +41,11 @@ When the application starts, it will create a file based on SQLite named "databa
 
 | Endpoint | Description | Usage |
 | --- | --- | --- |
-| /api/v1/monitor | Add/Remove endpoints to be monitored | /monitor add host {host} {port} - to add new entrie. |
-| /api/v1/hosts | Return all hosts registered in DB |  |
-| /api/v1/ping | Ping to target and port informed |  |
-| /api/v1/help | Show help message |  |
-| /api/v1/reset | Reset all entries in DB | |
+| /api/v1/monitor | Add/Remove endpoints to be monitored | /monitor add host {host} {port} - to add new entrie. <br> /monitor remove host {host} - to remove entrie. |
+| /api/v1/hosts | Return all hosts registered in DB | * |
+| /api/v1/ping | Ping to target and port informed | /ping {host} {port} |
+| /api/v1/help | Show help message | * |
+| /api/v1/reset | Reset all entries in DB | * |
 
 
 
