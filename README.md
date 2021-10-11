@@ -2,7 +2,7 @@
 
 Hello folks!
 
-This is my 2nd project created while studying for Go language, it's focused on the creation of a BOT for slack platform, with monitoring features (TCP Only) for endpoints and some extras commands.
+This is my 2nd project created based on Go language, it's focused on the creation of a BOT for slack platform, with monitoring features (TCP Only) for endpoints and some extras commands.
 
 
 [![Go Build](https://github.com/DaviAraujoCC/ARIA-ChatBot/actions/workflows/run.yml/badge.svg?branch=main)](https://github.com/DaviAraujoCC/ARIA-ChatBot/actions/workflows/run.yml)[![Go Report Card](https://goreportcard.com/badge/github.com/DaviAraujoCC/Slack_ChatBot)](https://goreportcard.com/report/github.com/DaviAraujoCC/Slack_ChatBot)
