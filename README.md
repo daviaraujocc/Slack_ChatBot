@@ -2,7 +2,7 @@
 
 Hello folks!
 
-This is my 2nd project created while studying for Go language, it's focused on the creation of a BOT for slack platform, with monitoring features (TCP Only) for endpoints and some extras commands.
+This is my 2nd project created based on Go language, it's focused on the creation of a BOT for slack platform, with monitoring features (TCP Only) for endpoints and some extras commands.
 
 
 [![Go Build](https://github.com/DaviAraujoCC/ARIA-ChatBot/actions/workflows/run.yml/badge.svg?branch=main)](https://github.com/DaviAraujoCC/ARIA-ChatBot/actions/workflows/run.yml)[![Go Report Card](https://goreportcard.com/badge/github.com/DaviAraujoCC/Slack_ChatBot)](https://goreportcard.com/report/github.com/DaviAraujoCC/Slack_ChatBot)
@@ -13,7 +13,7 @@ When the application starts, a file based on SQLite named "database.sql" will be
 
 After that it will search for environment variables that you need to inform in order to work correctly, including slack app token and so on.
 
-A check on registered hosts is made every 10 seconds, and when one is down, it will send alerts to your Notification Channel, when it's UP again, it will send an alert about it.
+A check on registered hosts is made every 10 seconds, and when one is down, it will send alerts to your Notification Channel, when it's UP again, it will send an another alert about it.
 
 ## Features:
 
@@ -42,7 +42,7 @@ Important variables marked with *.
 | PORT | Port for communication with API Server (default is 3000) |
 | *BOT_TOKEN_API | API token of your app created in SLACK |
 | *MONITOR_CHANNEL | Channel ID of where your commands will be executed |
-| *NOTIFICATION_CHANNEL | Channel ID of where your notifications will be sended |
+| *NOTIFICATION_CHANNEL | Channel ID of where your notifications will be sent |
 
 ## Endpoints:
 
