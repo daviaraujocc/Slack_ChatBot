@@ -18,7 +18,7 @@ func ConnectDB() *sql.DB {
 
 func CreateDB() {
 	if _, err := os.Stat("./database.db"); os.IsNotExist(err) {
-		// path/to/whatever does not exist
+
 		log.Println("Creating database.db...")
 
 		file, err := os.Create("./database.db")
