@@ -9,7 +9,11 @@ This is my 2nd project created while studying for Go language, it's focused on t
 
 ## How it works ?
 
-When the application starts, it will create a file based on SQLite named "database.sql" on the same directory of the executable, and it will search for environment variables like BOT_API_TOKEN and some channels ID's that you need to inform in order to work correctly, there is some several routes that will be explained on the Section "Endpoints" that you will use with Slash commands on slack.
+When the application starts, a file based on SQLite named "database.sql" will be created on the same directory of the executable, it will store your registered hosts/entries.
+
+After that it will search for environment variables that you need to inform in order to work correctly, including slack app token and so on.
+
+A check on registered hosts is made every 10 seconds, and when one is down, it will send alerts to your Notification Channel, when it's UP again, it will send an alert about it.
 
 ## Features:
 
@@ -24,18 +28,21 @@ When the application starts, it will create a file based on SQLite named "databa
 3. Execute and test your bot.
    
 ##### Or you can use docker:
+Build with:
    `docker build -t your-user/your-app-name .` <br>
+   Run your app:
    `docker run -t your-user/your-app-name -p 3000:3000(default)`
 
 ## Variables:
 
+Important variables marked with *.
 
 | Variable | Description |
 | --- | --- |
 | PORT | Default port for communication with API Server |
-| BOT_TOKEN_API | API token of your app created in SLACK |
-| MONITOR_CHANNEL | Channel ID of where your commands will be executed |
-| NOTIFICATION_CHANNEL | Channel ID of where your notifications will be sended |
+| *BOT_TOKEN_API | API token of your app created in SLACK |
+| *MONITOR_CHANNEL | Channel ID of where your commands will be executed |
+| *NOTIFICATION_CHANNEL | Channel ID of where your notifications will be sended |
 
 ## Endpoints:
 
