@@ -13,7 +13,7 @@ When the application starts, a file based on SQLite named "database.sql" will be
 
 After that it will search for environment variables that you need to inform in order to work correctly, including slack app token and so on.
 
-A check on registered hosts is made every 10 seconds, and when one is down, it will send alerts to your Notification Channel, when it's UP again, it will send an alert about it.
+A check on registered hosts is made every 10 seconds, and when one is down, it will send alerts to your Notification Channel, when it's UP again, it will send an another alert about it.
 
 ## Features:
 
