@@ -36,10 +36,9 @@ func MessageSender(dst, message string) {
 }
 
 func ShowAllHostsMessage(hosts []models.Host) {
+	api := slack.New(BOT_TOKEN_API, slack.OptionDebug(log_enable))
 	var bodyText strings.Builder
 	var status string
-	bodyText.WriteString("*Lista de hosts cadastrados:*")
-	bodyText.WriteString("\n")
 
 	for i, host := range hosts {
 		if host.Status == "DOWN" {
@@ -47,13 +46,30 @@ func ShowAllHostsMessage(hosts []models.Host) {
 		} else {
 			status = ":white_check_mark:"
 		}
-		//bodyText.WriteString(fmt.Sprintf("Host: %v, Porta: %v, Status: %v \n", host.Host_name, host.Port, status))
 		bodyText.WriteString(fmt.Sprintf("ID: %v \n", i+1) +
 			fmt.Sprintf("Host: %v \n", host.Host_name) +
 			fmt.Sprintf("Porta: %v \n", host.Port) +
 			fmt.Sprintf("Status: %v \n\n", status))
 
 	}
-	log.Println(bodyText.String())
-	MessageSender("monitor", bodyText.String())
+	preText := "*Lista de hosts cadastrados:*"
+	preTextF := slack.NewTextBlockObject("mrkdwn", preText+"\n\n", false, false)
+	bodyTextF := slack.NewTextBlockObject("mrkdwn", bodyText.String(), false, false)
+
+	dividerSection := slack.NewDividerBlock()
+	preTextSection := slack.NewSectionBlock(preTextF, nil, nil)
+	bodyTextSection := slack.NewSectionBlock(bodyTextF, nil, nil)
+
+	msg := slack.MsgOptionBlocks(
+		preTextSection,
+		dividerSection,
+		bodyTextSection,
+	)
+
+	_, _, _, err := api.SendMessage(
+		MONITOR_CHANNEL, msg,
+	)
+	if err != nil {
+		log.Println("error")
+	}
 }
