@@ -17,16 +17,18 @@ func ConnectDB() *sql.DB {
 }
 
 func CreateDB() {
+	if _, err := os.Stat("./database.db"); os.IsNotExist(err) {
+		// path/to/whatever does not exist
+		log.Println("Creating database.db...")
 
-	log.Println("Creating database.db...")
+		file, err := os.Create("./database.db")
+		if err != nil {
+			log.Println("")
+		}
 
-	file, err := os.Create("./database.db")
-	if err != nil {
-		log.Fatal(err.Error())
+		file.Close()
+		log.Println("database.db created")
 	}
-
-	file.Close()
-	log.Println("database.db created")
 }
 
 func CreateTableHosts() {
