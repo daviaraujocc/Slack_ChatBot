@@ -24,7 +24,7 @@ When the application starts, it will create a file based on SQLite named "databa
 3. Execute and test your bot.
    
 ##### Or you can use docker:
-   `docker build -t your-user/your-app-name .`
+   `docker build -t your-user/your-app-name .` <br>
    `docker run -t your-user/your-app-name -p 3000:3000(default)`
 
 ## Variables:
