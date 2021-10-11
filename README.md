@@ -28,13 +28,14 @@ A check on registered hosts is made every 10 seconds, and when one is down, it w
 ## Building the app:
 
 1. Be sure to have `gcc` installed on your O.S because it needs `CGO` since sqlite driver demands it.
-2. Run the command: `go build -o slackgo-api` to build the API.
-3. Execute and test your bot.
+2. Run `go mod tidy` to check for dependencies.
+3. Execute `go build -o slackgo-api` to build the executable of API.
+4. Execute and test your bot.
    
 ##### Or you can use docker:
-Build with:
+Build with:<br>
    `docker build -t your-user/your-app-name .` <br>
-   Run your app:
+   Run your app:<br>
    `docker run -t your-user/your-app-name -p 3000:3000(default)`
 
 ## Variables:
