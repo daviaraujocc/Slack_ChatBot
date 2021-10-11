@@ -42,7 +42,7 @@ Important variables marked with *.
 | PORT | Port for communication with API Server (default is 3000) |
 | *BOT_TOKEN_API | API token of your app created in SLACK |
 | *MONITOR_CHANNEL | Channel ID of where your commands will be executed |
-| *NOTIFICATION_CHANNEL | Channel ID of where your notifications will be sended |
+| *NOTIFICATION_CHANNEL | Channel ID of where your notifications will be sent |
 
 ## Endpoints:
 
