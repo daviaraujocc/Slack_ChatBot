@@ -12,8 +12,6 @@ import (
 	"time"
 )
 
-//var BOT_TOKEN_API = os.Getenv("BOT_TOKEN_API")
-
 func match(pattern string, value string) bool {
 	result, _ := regexp.MatchString(pattern, value)
 	return result
